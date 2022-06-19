@@ -8,7 +8,7 @@ services:
     ports:
       - "8222:8222"
     networks:
-      - opd-net
+      - disgo-net
     hostname: nats-server
   registration-svc:
     build:
@@ -19,11 +19,11 @@ services:
     ports:
       - "9090:9090"
     networks:
-      - opd-net
+      - disgo-net
     external_links:
-      - db:db
+      - db:registration-db
     depends_on:
-      - db
+      - registration-db
   inspection-svc:
     build:
       context: .
@@ -33,11 +33,11 @@ services:
     ports:
       - "9091:9091"
     networks:
-      - opd-net
+      - disgo-net
     external_links:
-      - db:db
+      - db:inspection-db
     depends_on:
-      - db
+      - inspection-db
   treatment-svc:
     build:
       context: .
@@ -47,11 +47,11 @@ services:
     ports:
       - "9092:9092"
     networks:
-      - opd-net
+      - disgo-net
     external_links:
-      - db:db
+      - db:treatment-db
     depends_on:
-      - db
+      - treatment-db
   release-svc:
     build:
       context: .
@@ -61,26 +61,67 @@ services:
     ports:
       - "9093:9093"
     networks:
-      - opd-net
+      - disgo-net
     external_links:
-      - db:db
+      - db:release-db
     depends_on:
-      - db
-  db:
-    container_name: mysql8
+      - release-db
+  registration-db:
+    container_name: registration-db
     image: mysql:8.0
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      MYSQL_ROOT_PASSWORD: Root@1985
-      MYSQL_DATABASE: opd_data
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: disgo_data
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - '3392:3306'
+    networks:
+      - disgo-net
+    volumes:
+      - "./registration-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql"
+  inspection-db:
+    container_name: inspection-db
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: disgo_data
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - '3391:3306'
+    networks:
+      - disgo-net
+    volumes:
+      - "./inspection-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql"
+  treatment-db:
+    container_name: treatment-db
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: disgo_data
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - '3393:3306'
+    networks:
+      - disgo-net
+    volumes:
+      - "./treatment-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql"
+  release-db:
+    container_name: release-db
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: disgo_data
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - '3306:3306'
     networks:
-      - opd-net
-    # hostname: mysql8
+      - disgo-net
     volumes:
-      - "./resources/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "./release-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql"
 networks:
-  opd-net:
+  disgo-net:
     driver: bridge

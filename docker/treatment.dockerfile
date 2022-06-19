@@ -5,4 +5,4 @@ COPY . /app
 WORKDIR /app/treatment-service/cmd
 RUN go build ./...
 
-ENTRYPOINT [ "./cmd", "-dbName", "opd_data", "-dbUser", "root", "-dbPassword", "Root@1985"]
+ENTRYPOINT [ "./cmd", "-dbName", "disgo_data", "-dbUser", "root", "-dbPassword", "root"]

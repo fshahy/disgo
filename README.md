@@ -1,3 +1,11 @@
+# Designing Microservices Platforms with NATS
+
+
+This the code repository is based on [Designing Microservices Platforms with NATS](https://www.packtpub.com/product/designing-microservices-platforms-with-nats/9781801072212), published by Packt.
+* Dockerized
+* Uses Go worksapces
+
+
 # Instructions to test the Microservices based OPD application that uses NATS
 
 ## Starting the NATS Server

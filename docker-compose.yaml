@@ -1,10 +1,8 @@
-version: '3'
+version: "3"
 
 services:
   nats:
-    image: 'nats:2.8.1'
-    expose:
-      - "4222"
+    image: "nats:2.8.1"
     ports:
       - "8222:8222"
     networks:
@@ -20,8 +18,8 @@ services:
       - "9090:9090"
     networks:
       - disgo-net
-    external_links:
-      - db:registration-db
+    # external_links:
+    #   - registration-db:registration-db
     depends_on:
       - registration-db
   inspection-svc:
@@ -34,8 +32,8 @@ services:
       - "9091:9091"
     networks:
       - disgo-net
-    external_links:
-      - db:inspection-db
+    # external_links:
+    #   - inspection-db:inspection-db
     depends_on:
       - inspection-db
   treatment-svc:
@@ -48,8 +46,8 @@ services:
       - "9092:9092"
     networks:
       - disgo-net
-    external_links:
-      - db:treatment-db
+    # external_links:
+    #   - db:treatment-db
     depends_on:
       - treatment-db
   release-svc:
@@ -62,8 +60,8 @@ services:
       - "9093:9093"
     networks:
       - disgo-net
-    external_links:
-      - db:release-db
+    # external_links:
+    #   - release-db:release-db
     depends_on:
       - release-db
   registration-db:
@@ -72,10 +70,10 @@ services:
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: disgo_data
+      MYSQL_DATABASE: disgo_registration_db
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - '3392:3306'
+    expose:
+      - "3306"
     networks:
       - disgo-net
     volumes:
@@ -86,10 +84,10 @@ services:
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: disgo_data
+      MYSQL_DATABASE: disgo_inspection_db
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - '3391:3306'
+    expose:
+      - "3306"
     networks:
       - disgo-net
     volumes:
@@ -100,10 +98,10 @@ services:
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: disgo_data
+      MYSQL_DATABASE: disgo_treatment_db
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - '3393:3306'
+    expose:
+      - "3306"
     networks:
       - disgo-net
     volumes:
@@ -114,10 +112,10 @@ services:
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: disgo_data
+      MYSQL_DATABASE: disgo_release_db
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - '3306:3306'
+    expose:
+      - "3306"
     networks:
       - disgo-net
     volumes:

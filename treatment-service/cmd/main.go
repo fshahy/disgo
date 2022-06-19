@@ -57,7 +57,7 @@ func main() {
 	}
 
 	// Connect to Database.
-	err = comp.SetupConnectionToDB("mysql", dbUser+":"+dbPass+"@tcp(db:3392)/"+dbName)
+	err = comp.SetupConnectionToDB("mysql", dbUser+":"+dbPass+"@tcp(treatment-db:3306)/"+dbName)
 	if err != nil {
 		log.Fatal(err)
 	}

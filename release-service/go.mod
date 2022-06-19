@@ -5,9 +5,18 @@ go 1.18
 replace shared => ../shared
 
 require (
-	shared v0.0.0-00010101000000-000000000000
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gorilla/mux v1.8.0
-	github.com/nats-io/nats.go v1.11.1-0.20210623165838-4b75fc59ae30
+	github.com/nats-io/nats.go v1.16.0
 	github.com/nats-io/nuid v1.0.1
+	shared v0.0.0-00010101000000-000000000000
+)
+
+require (
+	github.com/klauspost/compress v1.15.6 // indirect
+	github.com/minio/highwayhash v1.0.2 // indirect
+	github.com/nats-io/jwt/v2 v2.2.0 // indirect
+	github.com/nats-io/nkeys v0.3.0 // indirect
+	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
+	golang.org/x/time v0.0.0-20220609170525-579cf78fd858 // indirect
 )

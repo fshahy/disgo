@@ -1,0 +1,9 @@
+go 1.18
+
+use (
+	./shared
+	./inspection-service
+	./registration-service
+	./release-service
+	./treatment-service
+)

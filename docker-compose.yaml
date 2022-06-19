@@ -13,7 +13,7 @@ services:
   registration-svc:
     build:
       context: .
-      dockerfile: ./registration.dockerfile
+      dockerfile: ./docker/registration.dockerfile
     image: registration-service:1.0.0
     restart: always
     ports:
@@ -27,7 +27,7 @@ services:
   inspection-svc:
     build:
       context: .
-      dockerfile: ./inspection.dockerfile
+      dockerfile: ./docker/inspection.dockerfile
     image: inspection-service:1.0.0
     restart: always
     ports:
@@ -41,7 +41,7 @@ services:
   treatment-svc:
     build:
       context: .
-      dockerfile: ./treatment.dockerfile
+      dockerfile: ./docker/treatment.dockerfile
     image: treatment-service:1.0.0
     restart: always
     ports:
@@ -55,7 +55,7 @@ services:
   release-svc:
     build:
       context: .
-      dockerfile: ./release.dockerfile
+      dockerfile: ./docker/release.dockerfile
     image: release-service:1.0.0
     restart: always
     ports:
